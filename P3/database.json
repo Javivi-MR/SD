@@ -1,0 +1,81 @@
+{
+    "Usuario": [
+        {
+            "DNI": "45386606Q'",
+            "userName": "admin",
+            "password": "admin"
+        }
+    ],
+    "Sala": [
+        {
+            "roomId": 2,
+            "capacity": 100,
+            "resources": [
+                "altavoz",
+                "proyector"
+            ]
+        },
+        {
+            "roomId": 3,
+            "capacity": 80,
+            "resources": [
+                "proyector"
+            ]
+        },
+        {
+            "roomId": 4,
+            "capacity": 30,
+            "resources": [
+                "laser"
+            ]
+        },
+        {
+            "roomId": 5,
+            "capacity": 800,
+            "resources": [
+                "microfono"
+            ]
+        },
+        {
+            "roomId": 7,
+            "capacity": 70,
+            "resources": [
+                "laser"
+            ]
+        },
+        {
+            "roomId": 23,
+            "capacity": 30,
+            "resources": [
+                "rotuladores",
+                "altavoces"
+            ]
+        },
+        {
+            "roomId": 22,
+            "capacity": 30,
+            "resources": [
+                "rotuladores",
+                "microfono"
+            ]
+        }
+    ],
+    "Reserva": [
+        {
+            "bookingId": 1,
+            "roomId": 4,
+            "DNI": "45386606Q",
+            "date": "21/08/2022",
+            "startTime": "18:30",
+            "duration": 160
+        },
+        {
+            "bookingId": 2,
+            "roomId": 7,
+            "DNI": "234D",
+            "date": "21/08/2022",
+            "startTime": "16:30",
+            "duration": 160
+        }
+    ]
+}
