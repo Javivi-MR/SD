@@ -1,0 +1,67 @@
+[
+    {
+        "id": "e2bd4f403cc85768",
+        "type": "tab",
+        "label": "ex2_api",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "966cd7a51266acc4",
+        "type": "http in",
+        "z": "e2bd4f403cc85768",
+        "name": "",
+        "url": "/reverse",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 290,
+        "y": 120,
+        "wires": [
+            [
+                "12ccd6fbf1c6dd7f"
+            ]
+        ]
+    },
+    {
+        "id": "4981a8a22d704da0",
+        "type": "http response",
+        "z": "e2bd4f403cc85768",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 630,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "12ccd6fbf1c6dd7f",
+        "type": "function",
+        "z": "e2bd4f403cc85768",
+        "name": "",
+        "func": "var Reversed_str = \"\"; //creamos la cadena reversa vacia\nvar Original_str = msg.payload.str; //cargamos la cadena original\nvar l = Original_str.length; //asignamos a l la longitud de la cadena\n\n\nwhile(l >= 0)   //mientras que l sea mayor o igual a 0 (rango de la cadena)\n{\n    Reversed_str = Reversed_str + Original_str.charAt(l); //le asignamos el ultimo caracter de la cadena original a la cadena reversa\n    l = l - 1; //restamos 1 a l (hemos introducido un caracter)\n}\n\nmsg.payload.reversed_str = Reversed_str; //incluimos en msg \"reversed_str\": (y la cadena reversa)\n\nreturn msg; //devolvemos el mensaje",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 120,
+        "wires": [
+            [
+                "4981a8a22d704da0"
+            ]
+        ]
+    },
+    {
+        "id": "9177c575c9c5aba4",
+        "type": "comment",
+        "z": "e2bd4f403cc85768",
+        "name": "Acceder atraves del postman",
+        "info": "",
+        "x": 280,
+        "y": 180,
+        "wires": []
+    }
+]

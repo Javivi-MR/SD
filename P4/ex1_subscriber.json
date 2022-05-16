@@ -1,0 +1,102 @@
+[
+    {
+        "id": "a38e54a5e82d5d38",
+        "type": "tab",
+        "label": "ex1_subscriber",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b42f20dd378b956b",
+        "type": "mqtt in",
+        "z": "a38e54a5e82d5d38",
+        "name": "",
+        "topic": "Random",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "a24e19959ae38dac",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 220,
+        "wires": [
+            [
+                "4d7fc49baebb7b5c"
+            ]
+        ]
+    },
+    {
+        "id": "4d7fc49baebb7b5c",
+        "type": "function",
+        "z": "a38e54a5e82d5d38",
+        "name": "",
+        "func": "var entero = msg.payload;  //recibimos el entero pseudorandom del publisher\nvar suma = context.get('suma') || 0;    //cogemos el contexto anterior de suma o igualamos a 0\n\nif(entero % 2 == 0){   \n    suma = suma + parseInt(entero); //si es par se lo sumamos a suma\n}\n\nmsg.payload = \"El número recibido fue: \" + entero + \" y el actual valor del acumulador es de: \" + suma; //mensaje a printear\ncontext.set('suma',suma);   //guardamos el contexto de suma\n\nreturn msg;     //devolvemos el mensaje",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "45da5420883d61d6"
+            ]
+        ]
+    },
+    {
+        "id": "45da5420883d61d6",
+        "type": "debug",
+        "z": "a38e54a5e82d5d38",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "14b5a19beeac2a20",
+        "type": "comment",
+        "z": "a38e54a5e82d5d38",
+        "name": "Activar debuger para comprobar el funcionamiento",
+        "info": "",
+        "x": 610,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "a24e19959ae38dac",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    }
+]

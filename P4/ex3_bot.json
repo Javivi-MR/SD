@@ -1,0 +1,532 @@
+[
+    {
+        "id": "97a73b232822f152",
+        "type": "tab",
+        "label": "ex3_bot",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "03620543cabfcb90",
+        "type": "function",
+        "z": "97a73b232822f152",
+        "name": "texto",
+        "func": "//Cambiar por su ID\ncliente = 5343451859;    //guardamos en cliente la id del chat del cliente\nmsg.payload = {};\nmsg.payload.type = \"message\";   //tipo mensaje\nmsg.payload.content = \"¡Hola soy: informa-bot !\\nTengo las siguientes funcionalidades:\\n1.Noticias\\n2.Tiempo (Cádiz)\\n3.Chiste\\n\"; //Contenido del mensaje (funcionlidades)\nmsg.payload.chatId = cliente;   //asigamnos el chat id del cliente\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 260,
+        "wires": [
+            [
+                "b2154639a4111716"
+            ]
+        ]
+    },
+    {
+        "id": "b2154639a4111716",
+        "type": "telegram sender",
+        "z": "97a73b232822f152",
+        "name": "",
+        "bot": "781c7bd1472e7dea",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 770,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eb7922c39238a27f",
+        "type": "debug",
+        "z": "97a73b232822f152",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "98d16c2277ea4fba",
+        "type": "telegram command",
+        "z": "97a73b232822f152",
+        "name": "",
+        "command": "Hola",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "781c7bd1472e7dea",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 110,
+        "y": 220,
+        "wires": [
+            [
+                "eb7922c39238a27f",
+                "03620543cabfcb90"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c01a2eac32228da1",
+        "type": "telegram command",
+        "z": "97a73b232822f152",
+        "name": "",
+        "command": "Tiempo",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "781c7bd1472e7dea",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 90,
+        "y": 460,
+        "wires": [
+            [
+                "4a6d586427f1d2eb",
+                "27d35f3c2dd1901e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "ea5e894a12d03f5d",
+        "type": "function",
+        "z": "97a73b232822f152",
+        "name": "",
+        "func": "dic = msg.payload;  //obtenemos la informacion de la api\n//Cambiar por su ID\ncliente = 5343451859;    //guardamos en cliente la id del chat del cliente\n\nvar desc = dic.weather[0].description; //obtenemos de la informacion, la descripcion\nvar temp = dic.main.temp;  //obtenemos de la informacion, la temperatura\nvar senterm = dic.main.feels_like;   //obtenemos de la informacion, la sensacion termica\nvar tempmax = dic.main.temp_max;  //obtenemos de la informacion, la temperatura maxima\nvar tempmin = dic.main.temp_min;  //obtenemos de la informacion, la temperatura minima\nvar hum = dic.main.humidity;     //obtenemos de la informacion, la humedad\nvar v = dic.wind.speed; //velocidad del viento\n\nmsg.payload = {};\n\nmsg.payload.content = \"El tiempo en Cádiz es de:\\n- Descripción: \" + desc + \"\\n- Temperatura actual: \" + temp + \"ºC\" + \"\\n- Sensación térmica: \" + senterm + \"\\n- Temperatura máxima: \" + tempmax + \"ºC\" + \"\\n- Temperatura mínima: \" + tempmin + \"ºC\" + \"\\n- Humedad: \" + hum + \"%\" + \"\\n- Viento: \" + v + \"km/h\"; //montamos el mensaje\nmsg.payload.type = \"message\";   //tipo mensaje\nmsg.payload.chatId = cliente;   //asignamos el chatid del cliente\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 460,
+        "wires": [
+            [
+                "a5a9bb8b6cd248e9"
+            ]
+        ]
+    },
+    {
+        "id": "4a6d586427f1d2eb",
+        "type": "debug",
+        "z": "97a73b232822f152",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 330,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "27d35f3c2dd1901e",
+        "type": "http request",
+        "z": "97a73b232822f152",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.openweathermap.org/data/2.5/weather?q=Cadiz&appid=5ed05eba41132b634d80cd74d7686b1a&units=metric&lang=sp",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 350,
+        "y": 460,
+        "wires": [
+            [
+                "ea5e894a12d03f5d",
+                "a4e553d5e2dca9ac"
+            ]
+        ]
+    },
+    {
+        "id": "a5a9bb8b6cd248e9",
+        "type": "telegram sender",
+        "z": "97a73b232822f152",
+        "name": "",
+        "bot": "781c7bd1472e7dea",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 810,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a4e553d5e2dca9ac",
+        "type": "debug",
+        "z": "97a73b232822f152",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "397098475ee8de3d",
+        "type": "telegram command",
+        "z": "97a73b232822f152",
+        "name": "",
+        "command": "Noticias",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "781c7bd1472e7dea",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 90,
+        "y": 720,
+        "wires": [
+            [
+                "8589c0e08ebd7441",
+                "73f3bd90f14365b9"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1f848eaf53cb84dc",
+        "type": "function",
+        "z": "97a73b232822f152",
+        "name": "",
+        "func": "dic = msg.payload; //obtenemos la informacion de la api\n//Cambiar por su ID\ncliente = 5343451859;   //guardamos en cliente la id del chat del cliente\n\nvar contenido = \"\"; //inicializamos el contenido vacio\nvar i = 0;  //variable para el bucle\nwhile (i<5) //mientras que i sea menor que 5\n{\n    var titulo = dic.articles[i].title;     //guardamos el titulo de la noticia i\n    var link = dic.articles[i].url;     //guardamos la url de la noticia i\n    contenido = contenido + \"Titulo: \" + titulo + \"\\n\" + \"Link: \" + link + \"\\n\"; // preparamos el texto añadiendole la noticia i\n    i = i + 1;\n}\nmsg.payload.content = contenido; //agregamos el contenido al mensaje\nmsg.payload.type = \"message\";   //tipo mensaje\nmsg.payload.chatId = cliente;   // asignamos el chatid del cliente\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 720,
+        "wires": [
+            [
+                "25ca907302511504"
+            ]
+        ]
+    },
+    {
+        "id": "8589c0e08ebd7441",
+        "type": "debug",
+        "z": "97a73b232822f152",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 330,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "73f3bd90f14365b9",
+        "type": "http request",
+        "z": "97a73b232822f152",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://newsapi.org/v1/articles?source=bbc-news&language=es&sortBy=top&apiKey=080e69244f454cdd83d7e6fc84a9aaf1",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 350,
+        "y": 720,
+        "wires": [
+            [
+                "1f848eaf53cb84dc",
+                "f7534681ec7b22d5"
+            ]
+        ]
+    },
+    {
+        "id": "25ca907302511504",
+        "type": "telegram sender",
+        "z": "97a73b232822f152",
+        "name": "",
+        "bot": "781c7bd1472e7dea",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 810,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f7534681ec7b22d5",
+        "type": "debug",
+        "z": "97a73b232822f152",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "cd458788a029ba90",
+        "type": "telegram command",
+        "z": "97a73b232822f152",
+        "name": "",
+        "command": "Chiste",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "781c7bd1472e7dea",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 110,
+        "y": 960,
+        "wires": [
+            [
+                "cb297316a86d4554",
+                "779024d3ad24f00a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "cb297316a86d4554",
+        "type": "debug",
+        "z": "97a73b232822f152",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 370,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "779024d3ad24f00a",
+        "type": "http request",
+        "z": "97a73b232822f152",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://v2.jokeapi.dev/joke/Any?lang=es&blacklistFlags=nsfw,religious,political,racist,sexist,explicit",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 370,
+        "y": 1000,
+        "wires": [
+            [
+                "6a408ec79fc06a31",
+                "49c55afa0cf57d7a"
+            ]
+        ]
+    },
+    {
+        "id": "6a408ec79fc06a31",
+        "type": "debug",
+        "z": "97a73b232822f152",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "49c55afa0cf57d7a",
+        "type": "function",
+        "z": "97a73b232822f152",
+        "name": "",
+        "func": "dic = msg.payload;  //obtenemos la informacion de la api\n//Cambiar por su ID\ncliente = 5343451859;    //guardamos en cliente la id del chat del cliente\n\nvar contenido = \"\"; //inicializamos el contenido vacio\nif(dic.type == \"twopart\")   //si el chiste es de dos partes:\n{\n    contenido = \"+ \" + dic.setup + \"\\n- \" + dic.delivery //realizamos el mensaje\n}\nif(dic.type == \"single\")    //si el chiste es de una parte:\n{\n    contenido = dic.joke //realizamos el mensaje\n}\n\nmsg.payload.content = contenido;    //asignamos el contenido del mensaje\nmsg.payload.type = \"message\";   //tipo mensaje\nmsg.payload.chatId = cliente;   //asignamos el chatid del cliente\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 980,
+        "wires": [
+            [
+                "067b19e0ad4fd6f1"
+            ]
+        ]
+    },
+    {
+        "id": "067b19e0ad4fd6f1",
+        "type": "telegram sender",
+        "z": "97a73b232822f152",
+        "name": "",
+        "bot": "781c7bd1472e7dea",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 960,
+        "y": 988,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "40b0fb8ca1533e41",
+        "type": "function",
+        "z": "97a73b232822f152",
+        "name": "texto",
+        "func": "//Cambiar por su ID\ncliente = 5343451859; //guardamos en cliente la id del chat del cliente\n\nmsg.payload.type = \"message\";   // tipo mensaje\nmsg.payload.content = \"Escribeme ''Hola'' para empezar :)\";     //contenido del mensaje\nmsg.payload.chatId = cliente;   //asignamos la id del chat\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 120,
+        "wires": [
+            [
+                "cc6b3a597b40fdb7"
+            ]
+        ]
+    },
+    {
+        "id": "cc6b3a597b40fdb7",
+        "type": "telegram sender",
+        "z": "97a73b232822f152",
+        "name": "",
+        "bot": "781c7bd1472e7dea",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 750,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f9327cd7b9100f5c",
+        "type": "debug",
+        "z": "97a73b232822f152",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 410,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "63d93ca963fe59d6",
+        "type": "telegram command",
+        "z": "97a73b232822f152",
+        "name": "",
+        "command": "/start",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "781c7bd1472e7dea",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 90,
+        "y": 80,
+        "wires": [
+            [
+                "f9327cd7b9100f5c",
+                "40b0fb8ca1533e41"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "781c7bd1472e7dea",
+        "type": "telegram bot",
+        "botname": "informaejSD_bot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    }
+]
